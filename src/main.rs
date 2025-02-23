@@ -17,13 +17,9 @@ fn main() -> std::io::Result<()> {
                 KeyCode::Char('q') => {
                     break;
                 }
-                _ => {
-                    continue;
-                }
+                _ => continue,
             },
-            _ => {
-                continue;
-            }
+            _ => continue,
         }
     }
 
