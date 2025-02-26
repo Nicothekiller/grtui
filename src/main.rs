@@ -1,6 +1,15 @@
 use crossterm::event::{self, Event, KeyCode};
 use gtui::draw;
 
+/// Main function for the program. Starts execution.
+///
+/// # Panics
+///
+/// Panics if draw function failed.
+///
+/// # Errors
+///
+/// This function will return an error if event::read fails.
 fn main() -> std::io::Result<()> {
     let mut terminal = ratatui::init();
 
