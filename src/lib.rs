@@ -8,7 +8,7 @@ use ratatui::{
 
 /// Draw fn to use with ratatui. Draws the events happening on the screen.
 pub fn draw(frame: &mut Frame) {
-    let horizontal = Layout::horizontal([Constraint::Length(30), Constraint::Fill(1)]);
+    let horizontal = Layout::horizontal([Constraint::Fill(1), Constraint::Fill(3)]);
     let [semester_area, info_area] = horizontal.areas(frame.area());
 
     let semester_block = Block::bordered().title(Span::from("Semestres").green());
