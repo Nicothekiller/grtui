@@ -1,5 +1,4 @@
-use crossterm::event::{self, Event, KeyCode};
-use gtui::draw;
+use gtui::{Class, Major, Semester};
 
 /// Main function for the program. Starts execution.
 ///
@@ -11,21 +10,22 @@ use gtui::draw;
 ///
 /// This function will return an error if event::read fails.
 fn main() -> std::io::Result<()> {
-    let mut terminal = ratatui::init();
+    let terminal = ratatui::init();
 
-    loop {
-        terminal.draw(draw).expect("failed to draw frame");
+    let semesters = vec![
+        Semester::new(vec![
+            Class::new("Calculo vectorial".to_string(), 92.0, 3),
+            Class::new("Matematicas discretas".to_string(), 98.0, 3),
+        ]),
+        Semester::new(vec![
+            Class::new("Calculo integral".to_string(), 92.0, 3),
+            Class::new("quimica".to_string(), 98.0, 3),
+        ]),
+    ];
 
-        match event::read()? {
-            Event::Key(key) => match key.code {
-                KeyCode::Char('q') => {
-                    break;
-                }
-                _ => continue,
-            },
-            _ => continue,
-        }
-    }
+    let major = Major::new(semesters);
+
+    major.render(terminal)?;
 
     ratatui::restore();
     Ok(())
