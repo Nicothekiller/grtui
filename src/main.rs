@@ -18,12 +18,12 @@ fn main() -> std::io::Result<()> {
             Class::new("Matematicas discretas".to_string(), 98.0, 3),
         ]),
         Semester::new(vec![
-            Class::new("Calculo integral".to_string(), 92.0, 3),
-            Class::new("quimica".to_string(), 98.0, 3),
+            Class::new("Calculo integral".to_string(), 87.2, 4),
+            Class::new("quimica".to_string(), 59.0, 1),
         ]),
     ];
 
-    let major = Major::new(semesters);
+    let mut major = Major::new(semesters);
 
     major.render(terminal)?;
 
