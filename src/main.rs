@@ -4,7 +4,7 @@ use gtui::{Class, Major, Semester};
 ///
 /// # Panics
 ///
-/// Panics if draw function failed.
+/// Panics if render function failed.
 ///
 /// # Errors
 ///

@@ -12,6 +12,10 @@ use ratatui::{
     Terminal,
 };
 
+/// [`Major`] struct, represents a group of [`Semester`]
+///
+/// The struct also handles the state of the program and renders the TUI, but multiple instances
+/// can be created as long as only one of them calls [render](Major::render).
 #[derive(Debug, Clone)]
 pub struct Major {
     semesters: Vec<Semester>,
@@ -19,6 +23,7 @@ pub struct Major {
 }
 
 impl Major {
+    /// Creates a new [`Major`].
     pub fn new(semesters: Vec<Semester>) -> Self {
         Self {
             semesters,
@@ -26,12 +31,21 @@ impl Major {
         }
     }
 
-    /// Draw fn to use with ratatui. Draws the events happening on the screen.
+    /// Function to render the TUI because the struct also handles the state of the TUI.
+    ///
+    /// # Panics
+    ///
+    /// Panics if [draw](ratatui::Terminal::draw) fails.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error if [read](crossterm::event::read) fails.
     pub fn render(
         &mut self,
         mut terminal: Terminal<CrosstermBackend<Stdout>>,
     ) -> std::io::Result<()> {
         loop {
+            // TODO: actually handle the case where draw fails instead of just panicking.
             terminal
                 .draw(|frame| {
                     let horizontal = Layout::horizontal([Constraint::Fill(1), Constraint::Fill(3)]);
@@ -90,6 +104,7 @@ impl Major {
         Ok(())
     }
 
+    /// Returns a reference to the semesters of this [`Major`].
     pub fn semesters(&self) -> &[Semester] {
         &self.semesters
     }
