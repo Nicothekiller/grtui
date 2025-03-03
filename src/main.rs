@@ -18,8 +18,8 @@ fn main() -> std::io::Result<()> {
             Class::new("Matematicas discretas".to_string(), 98.0, 3),
         ]),
         Semester::new(vec![
-            Class::new("Calculo integral".to_string(), 87.2, 4),
-            Class::new("quimica".to_string(), 59.0, 1),
+            Class::new("Calculo integral".to_string(), 97.2, 3),
+            Class::new("quimica".to_string(), 89.0, 3),
         ]),
     ];
 

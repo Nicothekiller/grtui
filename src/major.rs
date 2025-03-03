@@ -46,8 +46,11 @@ impl Major {
     ) -> std::io::Result<()> {
         loop {
             terminal.draw(|frame| {
+                let vertical = Layout::vertical([Constraint::Fill(1), Constraint::Length(1)]);
+                let [main_area, status_area] = vertical.areas(frame.area());
+
                 let horizontal = Layout::horizontal([Constraint::Fill(1), Constraint::Fill(3)]);
-                let [semester_area, info_area] = horizontal.areas(frame.area());
+                let [semester_area, info_area] = horizontal.areas(main_area);
 
                 let semester_block = Block::bordered().title(Span::from(" Semestres ").green());
                 let info_block = Block::bordered().title(" Info ");
@@ -70,12 +73,20 @@ impl Major {
 
                 let semesters = Paragraph::new(s_lines).block(semester_block);
 
-                let info =
-                    Paragraph::new(format!("{:#?}", self.semesters[self.selected].classes()))
-                        .block(info_block);
+                let info = Paragraph::new(format!(
+                    "{:#?}\n\nSemeter GPA: {}",
+                    self.semesters[self.selected].classes(),
+                    self.semesters[self.selected].calc_gpa()
+                ))
+                .block(info_block);
+
+                let gpa_general = self.general_gpa();
+
+                let status_bar = Line::from(format!("general GPA: {}", gpa_general));
 
                 frame.render_widget(semesters, semester_area);
                 frame.render_widget(info, info_area);
+                frame.render_widget(status_bar, status_area);
             })?;
 
             match event::read()? {
@@ -100,6 +111,19 @@ impl Major {
         }
 
         Ok(())
+    }
+
+    fn general_gpa(&mut self) -> f64 {
+        let mut gpa_general = 0.0;
+        let mut total_hours = 0.0;
+
+        for semester in self.semesters() {
+            gpa_general += semester.total_grade_nd();
+            total_hours += semester.total_hours();
+        }
+
+        gpa_general /= total_hours;
+        gpa_general
     }
 
     /// Returns a reference to the semesters of this [`Major`].
