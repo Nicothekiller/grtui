@@ -45,40 +45,38 @@ impl Major {
         mut terminal: Terminal<CrosstermBackend<Stdout>>,
     ) -> std::io::Result<()> {
         loop {
-            // TODO: actually handle the case where draw fails instead of just panicking.
-            terminal
-                .draw(|frame| {
-                    let horizontal = Layout::horizontal([Constraint::Fill(1), Constraint::Fill(3)]);
-                    let [semester_area, info_area] = horizontal.areas(frame.area());
+            terminal.draw(|frame| {
+                let horizontal = Layout::horizontal([Constraint::Fill(1), Constraint::Fill(3)]);
+                let [semester_area, info_area] = horizontal.areas(frame.area());
 
-                    let semester_block = Block::bordered().title(Span::from(" Semestres ").green());
-                    let info_block = Block::bordered().title(" Info ");
+                let semester_block = Block::bordered().title(Span::from(" Semestres ").green());
+                let info_block = Block::bordered().title(" Info ");
 
-                    let mut s_lines_str: Vec<String> = vec![];
-                    for i in 1..self.semesters().len() + 1 {
-                        s_lines_str.push(format!("Semestre {}", i));
-                    }
+                let mut s_lines_str: Vec<String> = vec![];
+                for i in 1..self.semesters().len() + 1 {
+                    s_lines_str.push(format!("Semestre {}", i));
+                }
 
-                    let s_lines: Vec<Line> = s_lines_str
-                        .iter()
-                        .map(|x| {
-                            if *x == s_lines_str[self.selected] {
-                                return Line::from(x.as_str()).green().on_light_blue();
-                            }
+                let s_lines: Vec<Line> = s_lines_str
+                    .iter()
+                    .map(|x| {
+                        if *x == s_lines_str[self.selected] {
+                            return Line::from(x.as_str()).green().on_light_blue();
+                        }
 
-                            Line::from(x.as_str()).green()
-                        })
-                        .collect();
+                        Line::from(x.as_str()).green()
+                    })
+                    .collect();
 
-                    let semesters = Paragraph::new(s_lines).block(semester_block);
+                let semesters = Paragraph::new(s_lines).block(semester_block);
 
-                    let info = Paragraph::new(format!("{:#?}", self.semesters[self.selected]))
+                let info =
+                    Paragraph::new(format!("{:#?}", self.semesters[self.selected].classes()))
                         .block(info_block);
 
-                    frame.render_widget(semesters, semester_area);
-                    frame.render_widget(info, info_area);
-                })
-                .expect("failed to draw frame");
+                frame.render_widget(semesters, semester_area);
+                frame.render_widget(info, info_area);
+            })?;
 
             match event::read()? {
                 Event::Key(key) => match key.code {
