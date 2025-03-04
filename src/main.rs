@@ -1,4 +1,6 @@
-use grtui::{Class, Major, Semester};
+use std::{fs::File, io::Read};
+
+use grtui::Major;
 
 /// Main function for the program. Starts execution.
 ///
@@ -12,18 +14,11 @@ use grtui::{Class, Major, Semester};
 fn main() -> std::io::Result<()> {
     let terminal = ratatui::init();
 
-    let semesters = vec![
-        Semester::new(vec![
-            Class::new("Calculo vectorial".to_string(), 92.0, 3),
-            Class::new("Matematicas discretas".to_string(), 98.0, 3),
-        ]),
-        Semester::new(vec![
-            Class::new("Calculo integral".to_string(), 97.2, 3),
-            Class::new("quimica".to_string(), 89.0, 3),
-        ]),
-    ];
+    let mut data_file = File::open("data.json").unwrap();
+    let mut data_file_content = String::new();
+    data_file.read_to_string(&mut data_file_content).unwrap();
 
-    let mut major = Major::new(semesters);
+    let mut major: Major = serde_json::from_str(data_file_content.as_str()).unwrap();
 
     major.render(terminal)?;
 

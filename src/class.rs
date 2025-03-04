@@ -1,5 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 /// [`Class`] struct, represents an individual class in a semester.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Class {
     name: String,
     grade: f64,

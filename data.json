@@ -1,0 +1,33 @@
+{
+  "semesters": [
+    {
+      "classes": [
+        {
+          "name": "autoconocimiento",
+          "grade": 92.0,
+          "hours": 3
+        },
+        {
+          "name": "calculo integral",
+          "grade": 95.2,
+          "hours": 3
+        }
+      ]
+    },
+    {
+      "classes": [
+        {
+          "name": "quimica",
+          "grade": 97.0,
+          "hours": 3
+        },
+        {
+          "name": "calculo vectorial",
+          "grade": 82.2,
+          "hours": 3
+        }
+      ]
+    }
+  ],
+  "selected": 0
+}

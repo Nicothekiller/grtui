@@ -11,12 +11,13 @@ use ratatui::{
     widgets::{Block, Paragraph},
     Terminal,
 };
+use serde::{Deserialize, Serialize};
 
 /// [`Major`] struct, represents a group of [`Semester`]
 ///
 /// The struct also handles the state of the program and renders the TUI, but multiple instances
 /// can be created as long as only one of them calls [render](Major::render).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Major {
     semesters: Vec<Semester>,
     selected: usize,

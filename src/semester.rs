@@ -1,9 +1,11 @@
+use serde::{Deserialize, Serialize};
+
 use crate::Class;
 
 /// [`Semester`] struct, represents a single semester.
 ///
 /// A semester is a vec filled with [`Class`].
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Semester {
     classes: Vec<Class>,
 }
