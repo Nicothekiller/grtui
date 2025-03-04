@@ -1,4 +1,4 @@
-use gtui::{Class, Major, Semester};
+use grtui::{Class, Major, Semester};
 
 /// Main function for the program. Starts execution.
 ///
